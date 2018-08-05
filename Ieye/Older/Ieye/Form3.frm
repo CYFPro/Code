@@ -2,27 +2,22 @@ VERSION 5.00
 Begin VB.Form Form3 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "设置IP代理"
-   ClientHeight    =   3330
+   ClientHeight    =   3870
    ClientLeft      =   45
    ClientTop       =   390
    ClientWidth     =   2475
    LinkTopic       =   "Form3"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   3330
+   ScaleHeight     =   3870
    ScaleWidth      =   2475
    StartUpPosition =   3  '窗口缺省
-   Begin VB.Timer Timer1 
-      Interval        =   100
-      Left            =   1920
-      Top             =   600
-   End
    Begin VB.CommandButton Command4 
       Caption         =   "获取SSR"
       Height          =   375
       Left            =   1320
-      TabIndex        =   6
-      Top             =   2880
+      TabIndex        =   8
+      Top             =   3480
       Width           =   1095
    End
    Begin VB.CommandButton Command3 
@@ -38,8 +33,8 @@ Begin VB.Form Form3
       EndProperty
       Height          =   375
       Left            =   0
-      TabIndex        =   5
-      Top             =   2880
+      TabIndex        =   7
+      Top             =   3480
       Width           =   1215
    End
    Begin VB.CommandButton Command2 
@@ -55,8 +50,8 @@ Begin VB.Form Form3
       EndProperty
       Height          =   1095
       Left            =   1320
-      TabIndex        =   4
-      Top             =   1680
+      TabIndex        =   6
+      Top             =   2400
       Width           =   1215
    End
    Begin VB.CommandButton Command1 
@@ -72,9 +67,26 @@ Begin VB.Form Form3
       EndProperty
       Height          =   1095
       Left            =   0
-      TabIndex        =   3
-      Top             =   1680
+      TabIndex        =   5
+      Top             =   2400
       Width           =   1215
+   End
+   Begin VB.TextBox Text2 
+      BeginProperty Font 
+         Name            =   "宋体"
+         Size            =   15
+         Charset         =   134
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   375
+      Left            =   0
+      TabIndex        =   4
+      Text            =   "1080"
+      Top             =   2040
+      Width           =   2535
    End
    Begin VB.TextBox Text1 
       BeginProperty Font 
@@ -89,12 +101,29 @@ Begin VB.Form Form3
       Height          =   375
       Left            =   0
       TabIndex        =   1
-      Text            =   "127.0.0.1:1080"
+      Text            =   "127.0.0.1"
       Top             =   1200
       Width           =   2535
    End
+   Begin VB.Label Label3 
+      Caption         =   "端口:"
+      BeginProperty Font 
+         Name            =   "宋体"
+         Size            =   14.25
+         Charset         =   134
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   375
+      Left            =   0
+      TabIndex        =   3
+      Top             =   1680
+      Width           =   1215
+   End
    Begin VB.Label Label2 
-      Caption         =   "IP地址:端口"
+      Caption         =   "IP地址:"
       BeginProperty Font 
          Name            =   "宋体"
          Size            =   14.25
@@ -108,7 +137,7 @@ Begin VB.Form Form3
       Left            =   0
       TabIndex        =   2
       Top             =   840
-      Width           =   1935
+      Width           =   1215
    End
    Begin VB.Label Label1 
       Caption         =   "IP代理"
@@ -169,71 +198,34 @@ RegSetValueEx hKey, "ProxyEnable", 0, REG_DWORD, 1&, 4
 RegCloseKey hKey
 End Sub
 Sub 关闭代理()
-Dim SubKey     As String
-Dim hKey     As Long
- 
-SubKey = "Software\Microsoft\Windows\CurrentVersion\Internet Settings"
-RegCreateKey HKEY_CURRENT_USER, SubKey, hKey
-RegSetValueEx hKey, "ProxyEnable", 0, REG_DWORD, 0&, 4
-RegCloseKey hKey
+Shell "cmd.exe /c" & App.Path & "\NO.reg"
 End Sub
 
 Private Sub Command1_Click()
-注册表设置IE代理 Text1.Text
+注册表设置IE代理 Text1.Text & ":" & Text2.Text
 启用IE代理
-MsgBox "已设置代理为" & Text1.Text & "了！", 48, "IEye"
 End Sub
 
 Private Sub Command2_Click()
-MsgBox "关闭代理有一定延迟，请重启浏览器！！", 48, "注意:"
+MsgBox "请同意导入的REG,这是安全的，只是为了关闭代理！", 32, "注意:"
 关闭代理
 End Sub
 
 Private Sub Command3_Click()
-Dim a, b
+Dim A, b
 b = "https://raw.githubusercontent.com/CYFPro/ShadowsocksR/master/SSRTmp.pass"
 R = URLDownloadToFile(0, b, App.Path & "\SSR.txt", 0, 0)
 
 Open App.Path & "\SSR.txt" For Input As #1
-Line Input #1, a
+Line Input #1, A
 Clipboard.Clear
-    Clipboard.SetText a
-    MsgBox "已将最新无限速账号复制到你的剪贴板了！", 48, "SSR账号获取"
+    Clipboard.SetText A
+    MsgBox "已将最新无限速账号复制到你的剪贴板了！", 32, "SSR账号获取"
 End Sub
 
 Private Sub Command4_Click()
-Dim a, b
+Dim A, b
 b = "https://github.com/CYFPro/ShadowsocksR/raw/master/SSR.zip"
 R = URLDownloadToFile(0, b, App.Path & "\SSR.zip", 0, 0)
-MsgBox "已将最新版本的SSR下载下来了!就在" & App.Path & "\SSR.zip", 48, "SSR下载"
-End Sub
-
-Private Sub Label3_Click()
-End Sub
-
-Private Sub Form_Load()
-Dim WSH As Object, msw As Object
-Set WSH = CreateObject("WScript.Shell")
-
-Dim a
-a = WSH.RegRead("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\ProxyServer")
-Text1.Text = a
-End Sub
-
-Private Sub Timer1_Timer()
-Dim WSH As Object, msw As Object
-Set WSH = CreateObject("WScript.Shell")
-
-Dim a
-a = WSH.RegRead("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings\ProxyEnable")
-
-If a = 0 Then
-Command2.Enabled = False
-Command1.Enabled = True
-Else
-Command1.Enabled = False
-Command2.Enabled = True
-End If
-
-
+MsgBox "已将最新版本的SSR下载下来了!就在" & App.Path & "\SSR.zip", 32, "SSR下载"
 End Sub

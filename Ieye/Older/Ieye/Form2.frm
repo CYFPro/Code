@@ -2,24 +2,16 @@ VERSION 5.00
 Begin VB.Form Form2 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "设置"
-   ClientHeight    =   2100
+   ClientHeight    =   1395
    ClientLeft      =   45
    ClientTop       =   390
-   ClientWidth     =   2820
+   ClientWidth     =   2835
    LinkTopic       =   "Form2"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   2100
-   ScaleWidth      =   2820
+   ScaleHeight     =   1395
+   ScaleWidth      =   2835
    StartUpPosition =   3  '窗口缺省
-   Begin VB.CommandButton Command2 
-      Caption         =   "检查更新"
-      Height          =   735
-      Left            =   0
-      TabIndex        =   4
-      Top             =   1320
-      Width           =   1095
-   End
    Begin VB.CommandButton Command3 
       Caption         =   "打开代理"
       Height          =   495
@@ -44,14 +36,6 @@ Begin VB.Form Form2
       Top             =   0
       Width           =   2175
    End
-   Begin VB.Label Label2 
-      Caption         =   "当前版本：Ieye Alpha V0.8.1"
-      Height          =   735
-      Left            =   1200
-      TabIndex        =   5
-      Top             =   1320
-      Width           =   1575
-   End
    Begin VB.Label Label1 
       Caption         =   "主页"
       Height          =   255
@@ -66,28 +50,8 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-Private Declare Function URLDownloadToFile Lib "urlmon" Alias "URLDownloadToFileA" (ByVal pCaller As Long, ByVal szURL As String, ByVal szFileName As String, ByVal dwReserved As Long, ByVal lpfnCB As Long) As Long
 Private Sub Command1_Click()
 Shell "cmd.exe /c" & "RunDll32.exe InetCpl.cpl,ClearMyTracksByProcess 4351"
-End Sub
-
-
-Private Sub Command2_Click()
-Kill App.Path & "\1.dll"
-a = "https://raw.githubusercontent.com/2778754364/Code/master/1.dll"
-R = URLDownloadToFile(0, a, App.Path & "\1.dll", 0, 0)
-Open App.Path & "\1.dll" For Input As #1
-Dim Ver
-Input #1, Ver
-
-
-Close #1
-
-If Ver = "V0.8.1" Then
-MsgBox "版本Ieye Alpha V0.8.1没有更新", 48, "更新"
-Else
-MsgBox "版本" & Ver & "有更新!点击确定下载!", 48, "IEye"
-End If
 End Sub
 
 Private Sub Command3_Click()
