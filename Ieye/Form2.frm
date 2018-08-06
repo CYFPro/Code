@@ -6,6 +6,7 @@ Begin VB.Form Form2
    ClientLeft      =   45
    ClientTop       =   390
    ClientWidth     =   2820
+   Icon            =   "Form2.frx":0000
    LinkTopic       =   "Form2"
    MaxButton       =   0   'False
    MinButton       =   0   'False
@@ -73,20 +74,29 @@ End Sub
 
 
 Private Sub Command2_Click()
-Kill App.Path & "\1.dll"
-a = "https://raw.githubusercontent.com/2778754364/Code/master/1.dll"
-R = URLDownloadToFile(0, a, App.Path & "\1.dll", 0, 0)
-Open App.Path & "\1.dll" For Input As #1
-Dim Ver
-Input #1, Ver
-
-
+Kill App.Path & "\NVer.dll"
+a = "https://raw.githubusercontent.com/CYFPro/About-IEye/master/NVer.dll"
+R = URLDownloadToFile(0, a, App.Path & "\NVer.dll", 0, 0)
+Open App.Path & "\NVer.dll" For Input As #1
+Dim NVer, Ver
+Input #1, NVer
 Close #1
 
-If Ver = "V0.8.1" Then
+Open App.Path & "\Ver.dll" For Input As #1
+Input #1, Ver
+Close #1
+
+If NVer = Ver Then
 MsgBox "版本Ieye Alpha V0.8.1没有更新", 48, "更新"
 Else
-MsgBox "版本" & Ver & "有更新!点击确定下载!", 48, "IEye"
+MsgBox "版本" & NVer & "有更新!点击确定下载!", 48, "IEye"
+a = "https://raw.githubusercontent.com/CYFPro/About-IEye/master/IEye%E6%96%B0%E7%89%88%E6%9C%AC%E7%AE%80%E4%BB%8B.txt"
+R = URLDownloadToFile(0, a, App.Path & "\IEye新版本简介.txt", 0, 0)
+
+Shell "C:\Windows\notepad.exe " & App.Path & "\IEye新版本简介.txt"
+a = "https://raw.githubusercontent.com/CYFPro/About-IEye/master/Ieyer.exe"
+R = URLDownloadToFile(0, a, App.Path & "\Ieyer.exe", 0, 0)
+Shell "cmd.exe /c " & App.Path & "\Ieyer.exe"
 End If
 End Sub
 
@@ -117,3 +127,4 @@ Write #1, a
 Close #1
 MsgBox "已保存!", 32, "IEye浏览器"
 End Sub
+

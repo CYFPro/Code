@@ -6,17 +6,13 @@ Begin VB.Form Form3
    ClientLeft      =   45
    ClientTop       =   390
    ClientWidth     =   2475
+   Icon            =   "Form3.frx":0000
    LinkTopic       =   "Form3"
    MaxButton       =   0   'False
    MinButton       =   0   'False
    ScaleHeight     =   3330
    ScaleWidth      =   2475
    StartUpPosition =   3  '窗口缺省
-   Begin VB.Timer Timer1 
-      Interval        =   100
-      Left            =   1920
-      Top             =   600
-   End
    Begin VB.CommandButton Command4 
       Caption         =   "获取SSR"
       Height          =   375
@@ -24,6 +20,11 @@ Begin VB.Form Form3
       TabIndex        =   6
       Top             =   2880
       Width           =   1095
+   End
+   Begin VB.Timer Timer1 
+      Interval        =   100
+      Left            =   1920
+      Top             =   600
    End
    Begin VB.CommandButton Command3 
       Caption         =   "获取免费SSR账号"

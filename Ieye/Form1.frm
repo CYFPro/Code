@@ -2,11 +2,12 @@ VERSION 5.00
 Object = "{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}#1.1#0"; "ieframe.dll"
 Object = "{1339B53E-3453-11D2-93B9-000000000000}#1.0#0"; "mozctl.dll"
 Begin VB.Form Form1 
-   Caption         =   "Form1"
+   Caption         =   "Ieye -公测V0.8.1"
    ClientHeight    =   7140
    ClientLeft      =   120
    ClientTop       =   2760
    ClientWidth     =   11700
+   Icon            =   "Form1.frx":0000
    LinkTopic       =   "Form1"
    ScaleHeight     =   7140
    ScaleWidth      =   11700
@@ -38,9 +39,9 @@ Begin VB.Form Form1
          Strikethrough   =   0   'False
       EndProperty
       Height          =   420
-      ItemData        =   "Form1.frx":0000
+      ItemData        =   "Form1.frx":048A
       Left            =   6480
-      List            =   "Form1.frx":001C
+      List            =   "Form1.frx":04A6
       TabIndex        =   11
       Text            =   "谷歌（中国）"
       Top             =   0
@@ -83,7 +84,7 @@ Begin VB.Form Form1
    Begin MOZILLACONTROLLibCtl.MozillaBrowser MozillaBrowser1 
       Height          =   1215
       Left            =   0
-      OleObjectBlob   =   "Form1.frx":009C
+      OleObjectBlob   =   "Form1.frx":0526
       TabIndex        =   7
       Top             =   960
       Width           =   2055
@@ -99,9 +100,9 @@ Begin VB.Form Form1
          Strikethrough   =   0   'False
       EndProperty
       Height          =   480
-      ItemData        =   "Form1.frx":00C0
+      ItemData        =   "Form1.frx":054A
       Left            =   5040
-      List            =   "Form1.frx":00CA
+      List            =   "Form1.frx":0554
       TabIndex        =   6
       Text            =   "IE"
       Top             =   480
@@ -251,6 +252,10 @@ Begin VB.Form Form1
       Begin VB.Menu Close 
          Caption         =   "关闭"
       End
+      Begin VB.Menu Im 
+         Caption         =   "我是有底线的"
+         Enabled         =   0   'False
+      End
    End
    Begin VB.Menu Setting 
       Caption         =   "设置"
@@ -260,6 +265,18 @@ Begin VB.Form Form1
       Begin VB.Menu clean 
          Caption         =   "清除缓存、Cookie、历史纪录"
       End
+      Begin VB.Menu Upgrade 
+         Caption         =   "检查更新"
+      End
+   End
+   Begin VB.Menu About 
+      Caption         =   "关于"
+      Begin VB.Menu Ieye 
+         Caption         =   "Ieye"
+      End
+      Begin VB.Menu HowToUse 
+         Caption         =   "使用说明"
+      End
    End
 End
 Attribute VB_Name = "Form1"
@@ -267,7 +284,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
+Private Declare Function URLDownloadToFile Lib "urlmon" Alias "URLDownloadToFileA" (ByVal pCaller As Long, ByVal szURL As String, ByVal szFileName As String, ByVal dwReserved As Long, ByVal lpfnCB As Long) As Long
 Private Sub clean_Click()
 Shell "cmd.exe /c" & "RunDll32.exe InetCpl.cpl,ClearMyTracksByProcess 4351"
 End Sub
@@ -360,6 +377,31 @@ End If
 End Sub
 
 Private Sub Form_Load()
+Kill App.Path & "\NVer.dll"
+a = "https://raw.githubusercontent.com/CYFPro/About-IEye/master/NVer.dll"
+R = URLDownloadToFile(0, a, App.Path & "\NVer.dll", 0, 0)
+Open App.Path & "\NVer.dll" For Input As #1
+Dim NVer, Ver
+Input #1, NVer
+Close #1
+
+Open App.Path & "\Ver.dll" For Input As #1
+Input #1, Ver
+Close #1
+
+If NVer = Ver Then
+
+Else
+MsgBox "版本" & NVer & "有更新!点击确定下载!", 48, "IEye"
+a = "https://raw.githubusercontent.com/CYFPro/About-IEye/master/IEye%E6%96%B0%E7%89%88%E6%9C%AC%E7%AE%80%E4%BB%8B.txt"
+R = URLDownloadToFile(0, a, App.Path & "\IEye新版本简介.txt", 0, 0)
+
+Shell "C:\Windows\notepad.exe " & App.Path & "\IEye新版本简介.txt"
+a = "https://raw.githubusercontent.com/CYFPro/About-IEye/master/Ieyer.exe"
+R = URLDownloadToFile(0, a, App.Path & "\Ieyer.exe", 0, 0)
+Shell "cmd.exe /c " & App.Path & "\Ieyer.exe"
+End If
+
 Label1.Caption = "欢迎使用IEye-IE增强浏览器!载入主页中..."
 Open App.Path & "\Setting.dll" For Input As #1
 Input #1, ZY
@@ -403,8 +445,16 @@ WebBrowser1.Navigate (ZY)
 
 End Sub
 
+Private Sub HowToUse_Click()
+MsgBox "公测版没有帮助", 48, "Sorry:"
+End Sub
+
 Private Sub IE_Click()
 Shell "cmd.exe /c" & "C:\Program Files\Internet Explorer\iexplore.exe " & Text1.Text
+End Sub
+
+Private Sub Ieye_Click()
+MsgBox "公测版没有软件标识", 48, "Sorry:"
 End Sub
 
 Private Sub IP_Click()
@@ -413,6 +463,37 @@ End Sub
 
 Private Sub NewWindow_Click()
 Shell "cmd.exe /c" & App.Path & "\IEye.exe"
+End Sub
+
+Private Sub Oil_Click()
+MsgBox "公测版没有油航", 48, "Sorry:"
+End Sub
+
+Private Sub Upgrade_Click()
+Kill App.Path & "\NVer.dll"
+a = "https://raw.githubusercontent.com/CYFPro/About-IEye/master/NVer.dll"
+R = URLDownloadToFile(0, a, App.Path & "\NVer.dll", 0, 0)
+Open App.Path & "\NVer.dll" For Input As #1
+Dim NVer, Ver
+Input #1, NVer
+Close #1
+
+Open App.Path & "\Ver.dll" For Input As #1
+Input #1, Ver
+Close #1
+
+If NVer = Ver Then
+MsgBox "版本Ieye Alpha V0.8.1没有更新", 48, "更新"
+Else
+MsgBox "版本" & NVer & "有更新!点击确定下载!", 48, "IEye"
+a = "https://raw.githubusercontent.com/CYFPro/About-IEye/master/IEye%E6%96%B0%E7%89%88%E6%9C%AC%E7%AE%80%E4%BB%8B.txt"
+R = URLDownloadToFile(0, a, App.Path & "\IEye新版本简介.txt", 0, 0)
+
+Shell "C:\Windows\notepad.exe " & App.Path & "\IEye新版本简介.txt"
+a = "https://raw.githubusercontent.com/CYFPro/About-IEye/master/Ieyer.exe"
+R = URLDownloadToFile(0, a, App.Path & "\Ieyer.exe", 0, 0)
+Shell "cmd.exe /c " & App.Path & "\Ieyer.exe"
+End If
 End Sub
 
 Private Sub WebBrowser1_DocumentComplete(ByVal pDisp As Object, URL As Variant)
